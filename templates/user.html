@@ -1,0 +1,15 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+	<div class="row">
+            <div class="col-sm-12">
+                <div class="col-xs-12 col-sm-8">
+                    <h2>{{ user.username }}</h2>
+                    <p><strong>{{ userprofile.name }} {{ userprofile.surname }}</strong></p>
+                    <p><strong>Email: </strong>{{ user.email }}</p>
+                    <p><strong>Telefon: </strong>{{ userprofile.phone_number }}</p>
+                </div>
+		</div>
+	</div>
+{% endblock content %}
