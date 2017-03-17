@@ -1,6 +1,11 @@
 {% extends 'navbar.html' %}
 
 {% block content %}
+{% if message %}
+<div class="alert alert-danger" role="alert">
+    <strong>Podany login jest zajęty.</strong>
+</div>
+{% endif %}
 <div class="container login-container">
       <form class="form-signin" name="LoginForm" action="{% url 'register' %}" method="post">
         {% csrf_token %}
@@ -18,6 +23,11 @@
         <input id="inputSurname" name="Surname" class="form-control" placeholder="Nazwisko" required="" autofocus="" type="text">
         <label for="inputPhone" class="sr-only">Numer Telefonu</label>
         <input id="inputPhone" name="Phone" class="form-control" placeholder="Numer Telefonu" required="" autofocus="" type="text">
+        <label for="inputStreet" class="sr-only">Ulica</label>
+        <input id="inputStreet" name="Street" class="form-control" placeholder="Ulica" required="" autofocus="" type="text">
+        <label for="inputPostcode" class="sr-only">Kod pocztowy</label>
+        <input id="inputPostcode" name="Postcode" class="form-control" placeholder="Kod pocztowy" required="" autofocus="" type="text">
+
         <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj</button>
       </form>
 </div>

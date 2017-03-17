@@ -42,11 +42,16 @@ def register_view(request):
         name = request.POST.get('Name')
         surname = request.POST.get('Surname')
         phone = request.POST.get('Phone')
+        street = request.POST.get('Street')
+        postcode = request.POST.get('Postcode')
         if not User.objects.filter(username=username).exists():
             user = User.objects.create_user(username, email, password)
-            site_user = SiteUser(user=user, name=name, surname=surname, phone_number=phone)
+            site_user = SiteUser(user=user, name=name, surname=surname, phone_number=phone, street=street,
+                                 postcode=postcode)
             site_user.save()
             return redirect('login')
+        else:
+            return render(request, 'register.html', {'message': 'LOGINTAKEN'})
     return render(request, 'register.html', {})
 
 
