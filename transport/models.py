@@ -15,6 +15,9 @@ class SiteUser(models.Model):
     postcode = models.IntegerField(blank=True, null=True)
     city = models.ForeignKey('City', blank=True, null=True)
 
+    def formatted_postcode(self):
+        return str(self.postcode)[0:2] + '-' + str(self.postcode)[2:5]
+
 
 class Company(models.Model):
     name = models.TextField(max_length=255)
