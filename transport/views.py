@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
-from .models import SiteUser, User
+from .models import SiteUser, User, Offer
 # Create your views here.
 
 
@@ -58,3 +58,13 @@ def register_view(request):
 def user_view(request, username):
     user = get_object_or_404(User, username=username)
     return render(request, 'user.html', {'userprofile': user.siteuser, 'user': user})
+
+
+
+def offer_view(request, offer_id):
+    #offer = get_object_or_404(Offer, pk=offer_id)
+    return render(request, 'offer.html', {'offer': None})
+
+
+def add_offer_view(request):
+    return render(request, 'addoffer.html')

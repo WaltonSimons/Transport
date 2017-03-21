@@ -35,3 +35,14 @@ class Offer(models.Model):
     creation_date = models.DateTimeField(default=datetime.now())
     title = models.TextField(max_length=512)
     description = models.TextField(max_length=5000)
+    earliest_pickup = models.DateTimeField(default=datetime.now(), blank=True, null=True)
+    earliest_delivery = models.DateTimeField(default=datetime.now(), blank=True, null=True)
+    latest_pickup = models.DateTimeField(default=datetime.now(), blank=True, null=True)
+    latest_delivery = models.DateTimeField(default=datetime.now(), blank=True, null=True)
+    category = models.TextField(max_length=255, blank=True, null=True) #TODO: Dodać model 'Category'
+    length = models.IntegerField(blank=True, null=True)
+    width = models.IntegerField(blank=True, null=True)
+    height = models.IntegerField(blank=True, null=True)
+    weight = models.FloatField(blank=True, null=True)
+    price_cap = models.IntegerField(blank=True, null=True)
+

@@ -6,3 +6,9 @@
         height: 600px;
         width: 100%;
        }
+
+.well-block {
+    background-color: #fff;
+    border: 1px solid #e9e6e8;
+    padding: 40px;
+}
