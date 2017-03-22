@@ -33,6 +33,7 @@ class City(models.Model):
 
 class Offer(models.Model):
     creation_date = models.DateTimeField(default=datetime.now())
+    author = models.ForeignKey(User, related_name='offers', null=True)
     title = models.TextField(max_length=512)
     description = models.TextField(max_length=5000)
     earliest_pickup = models.DateTimeField(default=datetime.now(), blank=True, null=True)

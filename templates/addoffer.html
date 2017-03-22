@@ -1,6 +1,7 @@
 {% extends 'navbar.html' %}
 
-{% block content %}<div class="row">
+{% block content %}
+    <div class="row">
         <div class="well-block">
             <div class="well-title">
                 <h2>Dodaj nową ofertę</h2>
@@ -12,21 +13,24 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label" for="title">Nazwa oferty</label>
-                            <input id="title" name="title" type="text" placeholder="Np. &quot;Przewóz pustych kartonowych pudeł&quot;" class="form-control input-md">
+                            <input id="title" name="title" type="text"
+                                   placeholder="Np. &quot;Przewóz pustych kartonowych pudeł&quot;"
+                                   class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="control-label" for="email">Kategoria</label>
-                            <input id="email" name="email" type="text" placeholder="" class="form-control input-md">
+                            <label class="control-label" for="category">Kategoria</label>
+                            <input id="category" name="category" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="control-label" for="earliest_pickup">Najwcześniejsza data odbioru</label>
-                            <input id="earliest_pickup" name="earliest_pickup" type="date" placeholder="DD - MM - YYYY" class="form-control input-md">
+                            <input id="earliest_pickup" name="earliest_pickup" type="date" placeholder="DD - MM - YYYY"
+                                   class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input -->
@@ -34,7 +38,8 @@
                         <div class="form-group">
                             <div class="form-group">
                                 <label class="control-label" for="latest_pickup">Najpóźniejsza data odbioru</label>
-                                <input id="latest_pickup" name="latest_pickup" type="date" placeholder="DD - MM - YYYY" class="form-control input-md">
+                                <input id="latest_pickup" name="latest_pickup" type="date" placeholder="DD - MM - YYYY"
+                                       class="form-control input-md">
                             </div>
                         </div>
                     </div>
@@ -42,7 +47,8 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="control-label" for="earliest_delivery">Najwcześniejsza data dostawy</label>
-                            <input id="earliest_delivery" name="earliest_delivery" type="date" placeholder="DD - MM - YYYY" class="form-control input-md">
+                            <input id="earliest_delivery" name="earliest_delivery" type="date"
+                                   placeholder="DD - MM - YYYY" class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input -->
@@ -50,7 +56,8 @@
                         <div class="form-group">
                             <div class="form-group">
                                 <label class="control-label" for="latest_delivery">Najpóźniejsza data dostawy</label>
-                                <input id="latest_delivery" name="latest_delivery" type="date" placeholder="DD - MM - YYYY" class="form-control input-md">
+                                <input id="latest_delivery" name="latest_delivery" type="date"
+                                       placeholder="DD - MM - YYYY" class="form-control input-md">
                             </div>
                         </div>
                     </div>
@@ -58,32 +65,45 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label" for="description">Treść oferty</label>
-                            <textarea id="description" name="description" placeholder="" class="form-control input-md ui-resizable"></textarea>
+                            <textarea id="description" name="description" placeholder=""
+                                      class="form-control input-md ui-resizable"></textarea>
                         </div>
                     </div>
                     <!-- Dimensions -->
                     <div class="col-md-2">
                         <div class="form-group">
                             <label class="control-label" for="length">Długość (cm)</label>
-                            <input id="length" name="length" type="number" placeholder="Długość" class="form-control input-md">
+                            <input id="length" name="length" type="number" placeholder="Długość"
+                                   class="form-control input-md">
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label class="control-label" for="width">Szerokość (cm)</label>
-                            <input id="width" name="width" type="number" placeholder="Szerokość" class="form-control input-md">
+                            <input id="width" name="width" type="number" placeholder="Szerokość"
+                                   class="form-control input-md">
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label class="control-label" for="height">Wysokość (cm)</label>
-                            <input id="height" name="height" type="number" placeholder="Wysokość" class="form-control input-md">
+                            <input id="height" name="height" type="number" placeholder="Wysokość"
+                                   class="form-control input-md">
                         </div>
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
                             <label class="control-label" for="weight">Waga (kg)</label>
-                            <input id="weight" name="weight" type="number" placeholder="Waga" class="form-control input-md">
+                            <input id="weight" name="weight" type="number" placeholder="Waga"
+                                   class="form-control input-md">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="price">Maksymalna zapłata za przewóz</label>
+                            <input id="price" name="price" type="number" placeholder="0" class="form-control input-md">
                         </div>
                     </div>
                     <!-- Button -->
@@ -94,6 +114,7 @@
                     </div>
                 </div>
             </form>
-            <!-- form end -->
         </div>
+        <!-- form end -->
+    </div>
 {% endblock content %}

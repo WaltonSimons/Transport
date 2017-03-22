@@ -60,11 +60,29 @@ def user_view(request, username):
     return render(request, 'user.html', {'userprofile': user.siteuser, 'user': user})
 
 
-
 def offer_view(request, offer_id):
-    #offer = get_object_or_404(Offer, pk=offer_id)
-    return render(request, 'offer.html', {'offer': None})
+    offer = get_object_or_404(Offer, pk=offer_id)
+    return render(request, 'offer.html', {'offer': offer})
 
 
 def add_offer_view(request):
+    if request.POST:
+        title = request.POST.get('title')
+        author = request.user
+        category = request.POST.get('category')
+        earliest_pickup = request.POST.get('earliest_pickup')
+        latest_pickup = request.POST.get('latest_pickup')
+        earliest_delivery = request.POST.get('earliest_delivery')
+        latest_delivery = request.POST.get('latest_delivery')
+        description = request.POST.get('description')
+        length = request.POST.get('length')
+        width = request.POST.get('width')
+        height = request.POST.get('height')
+        weight = request.POST.get('weight')
+        price = request.POST.get('price')
+
+        offer = Offer.objects.create(title=title, author=author, category=category, earliest_pickup=earliest_pickup,
+                                     latest_pickup=latest_pickup, earliest_delivery=earliest_delivery,
+                                     latest_delivery=latest_delivery, description=description, length=length,
+                                     width=width, height=height, weight=weight, price_cap=price)
     return render(request, 'addoffer.html')
