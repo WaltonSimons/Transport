@@ -1,5 +1,7 @@
 {% extends 'navbar.html' %}
 
+{% block title %}{{ offer.title }}{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="col-xs-4 item-photo">
@@ -8,7 +10,8 @@
         </div>
         <div class="col-xs-5" style="border:0px solid gray">
             <h3>{{ offer.title }}</h3>
-            <h5>wystawione prez <a href="{% url 'user' offer.author %}">{{ offer.author }}</a> ·
+            <h5>dodano {{ offer.creation_date.date }}</h5>
+            <h5>prez <a href="{% url 'user' offer.author %}">{{ offer.author }}</a> ·
                 <small>(20 opinii)</small>
             </h5>
 

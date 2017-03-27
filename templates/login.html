@@ -1,5 +1,7 @@
 {% extends 'navbar.html' %}
 
+{% block title %}Logowanie{% endblock %}
+
 {% block content %}
 <div class="container login-container">
       <form class="form-signin" name="LoginForm" action="{% url 'login' %}" method="post">

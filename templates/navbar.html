@@ -8,7 +8,9 @@
 
     <link rel="stylesheet" type="text/css" href={% static 'transport/style.css' %} />
 
-     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <title>Giełda Usług Transportowych - {% block title %}{% endblock %}</title>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-static-top">
@@ -23,7 +25,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#search">Przeglądaj Oferty</a></li>
+            <li><a href="{% url 'offers_list' %}">Przeglądaj Oferty</a></li>
             <li><a href="{% url 'add_offer' %}">Dodaj Ofertę</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
