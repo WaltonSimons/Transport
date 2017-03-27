@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from .models import SiteUser, User, Offer
+from datetime import datetime
 # Create your views here.
 
 
@@ -68,12 +69,17 @@ def offer_view(request, offer_id):
 def add_offer_view(request):
     if request.POST:
         title = request.POST.get('title')
+        date = datetime.now()
         author = request.user
         category = request.POST.get('category')
         earliest_pickup = request.POST.get('earliest_pickup')
+        earliest_pickup = None if earliest_pickup == '' else earliest_pickup
         latest_pickup = request.POST.get('latest_pickup')
+        latest_pickup = None if latest_pickup == '' else latest_pickup
         earliest_delivery = request.POST.get('earliest_delivery')
+        earliest_delivery = None if earliest_delivery == '' else earliest_delivery
         latest_delivery = request.POST.get('latest_delivery')
+        latest_delivery = None if latest_delivery == '' else latest_delivery
         description = request.POST.get('description')
         length = request.POST.get('length')
         width = request.POST.get('width')
@@ -81,8 +87,13 @@ def add_offer_view(request):
         weight = request.POST.get('weight')
         price = request.POST.get('price')
 
-        offer = Offer.objects.create(title=title, author=author, category=category, earliest_pickup=earliest_pickup,
+        offer = Offer.objects.create(title=title, creation_date=date, author=author, category=category, earliest_pickup=earliest_pickup,
                                      latest_pickup=latest_pickup, earliest_delivery=earliest_delivery,
                                      latest_delivery=latest_delivery, description=description, length=length,
                                      width=width, height=height, weight=weight, price_cap=price)
     return render(request, 'addoffer.html')
+
+
+def offers_list_view(request):
+    newest_offers = Offer.objects.order_by('-creation_date')[0:20]
+    return render(request, 'offerslist.html', {'newest_offers': newest_offers})

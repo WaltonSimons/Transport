@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'user/(?P<username>[\w\-]+)/', views.user_view, name='user'),
     url(r'offer/(?P<offer_id>\d+)/', views.offer_view, name='offer'),
     url(r'addoffer/', views.add_offer_view, name='add_offer'),
+    url(r'browse/', views.offers_list_view, name='offers_list'),
 ]

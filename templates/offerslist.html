@@ -1,0 +1,41 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Lista Ofert{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class=" col-md-12">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Oferta</th>
+                    <th>Wystawiający</th>
+                    <th>Dodano</th>
+                    <th>Z</th>
+                    <th>Do</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for offer in newest_offers %}
+                <tr>
+                    <td><p><a href="{% url 'offer' offer.pk %}">{{ offer.title }}</a></p></td>
+                    <td><p><a href="{% url 'user' offer.author %}">{{ offer.author }}</a></p></td>
+                    <td><p>{{ offer.creation_date.date }}</p></td>
+                    <td><p></p></td>
+                    <td><p></p></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="pull-right">
+            <ul class="pagination">
+                <li><a href="#">«</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">»</a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock content %}
