@@ -35,7 +35,7 @@
                 <ul class="dropdown-menu">
                   <li><a href="{% url 'user' user.username %}">Mój profil</a></li>
                   <li><a href="#">Moje oferty</a></li>
-                  <li><a href="#">Wiadomości</a></li>
+                  <li><a href="{% url 'inbox' %}">Wiadomości</a></li>
                   <li role="separator" class="divider"></li>
                   <li><a href="{% url 'logout' %}">Wyloguj</a></li>
                 </ul>

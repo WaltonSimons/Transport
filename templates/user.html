@@ -49,7 +49,7 @@
               </div>
             </div>
                  <div class="panel-footer">
-                        <a type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i> wyślij wiadomość</a>
+                        <a href="{% url 'conversation' user.username %}" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i> wyślij wiadomość</a>
                         <span class="pull-right">
                             <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-user"></i> dodaj do kontaktów</a>
                         </span>

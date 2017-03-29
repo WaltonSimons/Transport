@@ -12,4 +12,6 @@ urlpatterns = [
     url(r'offer/(?P<offer_id>\d+)/', views.offer_view, name='offer'),
     url(r'addoffer/', views.add_offer_view, name='add_offer'),
     url(r'browse/', views.offers_list_view, name='offers_list'),
+    url(r'inbox/(?P<username>[\w\-]+)/', views.conversation_view, name='conversation'),
+    url(r'inbox/', views.inbox_view, name='inbox'),
 ]

@@ -1,0 +1,34 @@
+{% extends 'navbar.html' %}
+
+{% block title %}konwersacja z {{ other_user }}{% endblock %}
+
+{% block content %}
+    <div class="panel-body">
+        <h3>Konwersacja z {{ other_user }}</h3>
+        {% for message in messages %}
+            <div class="message-date">
+                {{ message.creation_date }}
+            </div>
+            <div class="row">
+                {% if message.sender == user %}
+                    <div class="message message-out pull-right">
+                {% else %}
+                    <div class="message message-in pull-left">
+                {% endif %}
+                {{ message.text }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form accept-charset="UTF-8" action="" method="POST">
+                        {% csrf_token %}
+                        <textarea class="form-control" name="message" placeholder="Wpisz wiadomość" rows="5" style="margin-bottom:10px;"></textarea>
+                        <button class="btn btn-info" type="submit">Wyślij wiadomość</button>
+                    </form>
+                </div>
+            </div>
+	</div>
+{% endblock content %}

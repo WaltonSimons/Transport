@@ -47,3 +47,25 @@ class Offer(models.Model):
     weight = models.FloatField(blank=True, null=True)
     price_cap = models.IntegerField(blank=True, null=True)
 
+
+class Conversation(models.Model):
+    users = models.ManyToManyField(User, related_name='conversations')
+    last_message_date = models.DateTimeField(default=datetime.now())
+
+    def last_message_short(self):
+        last_message = self.messages.order_by('-creation_date')[0].text
+        return last_message[:50] + '...' if len(last_message) > 50 else last_message
+
+    def get_other_user(self, user):
+        result = None
+        for u in self.users.all():
+            if u.username != user.username:
+                result = u
+        return result
+
+
+class Message(models.Model):
+    conversation = models.ForeignKey(Conversation, related_name='messages')
+    sender = models.ForeignKey(User, related_name='sender')
+    text = models.TextField(max_length=5000)
+    creation_date = models.DateTimeField(default=datetime.now())
