@@ -4,6 +4,84 @@
 
 {% block content %}
     <div class="row">
+        <div class="well-block">
+            <div class="well-title">
+                <h3>Wyszukaj</h3>
+            </div>
+            <form method="get" id="form1">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="title">Tytuł</label>
+                            <input id="title" name="title" type="text"
+                                   placeholder="Np. &quot;Przewóz pustych kartonowych pudeł&quot;"
+                                   class="form-control input-md">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="category">Kategoria</label>
+                            <input id="category" name="category" type="text" placeholder=""
+                                   class="form-control input-md">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="length">Długość do (cm)</label>
+                            <input id="length" name="length" type="number" placeholder="Długość"
+                                   class="form-control input-md">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="width">Szerokość do (cm)</label>
+                            <input id="width" name="width" type="number" placeholder="Szerokość"
+                                   class="form-control input-md">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="height">Wysokość do (cm)</label>
+                            <input id="height" name="height" type="number" placeholder="Wysokość"
+                                   class="form-control input-md">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="weight">Waga do (kg)</label>
+                            <input id="weight" name="weight" type="number" placeholder="Waga"
+                                   class="form-control input-md">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="price">Minimalna zapłata za przewóz</label>
+                            <input id="price" name="min_price" type="number" placeholder="0"
+                                   class="form-control input-md">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button class="btn btn-default">Wyszukaj</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <script type="text/javascript">
+                $('#form1').submit(function () {
+                    $(this)
+                        .find('input[name]')
+                        .filter(function () {
+                            return !this.value;
+                        })
+                        .prop('name', '');
+                });
+            </script>
+        </div>
+    </div>
+    <div class="row">
         <div class=" col-md-12">
             <table class="table table-striped table-hover">
                 <thead>
@@ -17,13 +95,13 @@
                 </thead>
                 <tbody>
                 {% for offer in newest_offers %}
-                <tr>
-                    <td><p><a href="{% url 'offer' offer.pk %}">{{ offer.title }}</a></p></td>
-                    <td><p><a href="{% url 'user' offer.author %}">{{ offer.author }}</a></p></td>
-                    <td><p>{{ offer.creation_date.date }}</p></td>
-                    <td><p></p></td>
-                    <td><p></p></td>
-                </tr>
+                    <tr>
+                        <td><p><a href="{% url 'offer' offer.pk %}">{{ offer.title }}</a></p></td>
+                        <td><p><a href="{% url 'user' offer.author %}">{{ offer.author }}</a></p></td>
+                        <td><p>{{ offer.creation_date.date }}</p></td>
+                        <td><p></p></td>
+                        <td><p></p></td>
+                    </tr>
                 {% endfor %}
                 </tbody>
             </table>

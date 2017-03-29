@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from .models import SiteUser, User, Offer, Conversation
 from datetime import datetime
 from .messages import get_conversation, get_messages, send_message, create_conversation
+from django.db.models import Q
 # Create your views here.
 
 
@@ -96,7 +97,29 @@ def add_offer_view(request):
 
 
 def offers_list_view(request):
-    newest_offers = Offer.objects.order_by('-creation_date')[0:20]
+    if request.GET:
+        title = request.GET.get('title')
+        length = request.GET.get('length')
+        width = request.GET.get('width')
+        height = request.GET.get('height')
+        weight = request.GET.get('weight')
+        min_price = request.GET.get('min_price')
+        queryset = Offer.objects.all()
+        if title is not None:
+            queryset = queryset.filter(title__contains=title)
+        if length is not None:
+            queryset = queryset.filter(length__lte=length)
+        if width is not None:
+            queryset = queryset.filter(width__lte=width)
+        if height is not None:
+            queryset = queryset.filter(height__lte=height)
+        if weight is not None:
+            queryset = queryset.filter(weight__lte=weight)
+        if min_price is not None:
+            queryset = queryset.filter(price_cap__gte=min_price)
+        newest_offers = queryset.order_by('-creation_date')[0:20]
+    else:
+        newest_offers = Offer.objects.order_by('-creation_date')[0:20]
     return render(request, 'offerslist.html', {'newest_offers': newest_offers})
 
 
