@@ -84,9 +84,13 @@ def add_offer_view(request):
         latest_delivery = None if latest_delivery == '' else latest_delivery
         description = request.POST.get('description')
         length = request.POST.get('length')
+        length = None if length == '' else length
         width = request.POST.get('width')
+        width = None if width == '' else width
         height = request.POST.get('height')
+        height = None if height == '' else height
         weight = request.POST.get('weight')
+        weight = None if weight == '' else weight
         price = request.POST.get('price')
 
         offer = Offer.objects.create(title=title, creation_date=date, author=author, category=category, earliest_pickup=earliest_pickup,

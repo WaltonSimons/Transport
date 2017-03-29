@@ -31,9 +31,11 @@
             <div style="width:100%;border-top:1px solid silver">
                 <p style="padding:15px;">
                 <div class="row">
+                    {% if offer.width or offer.length or offer.height %}
                     <div class="col-md-6">
                         <strong>Wymiary: </strong> {{ offer.width }} x {{ offer.length }} x {{ offer.height }} cm
                     </div>
+                    {% endif %}
                     <div class="col-md-6">
                         <strong>Waga: </strong> {{ offer.weight }} kg
                     </div>
