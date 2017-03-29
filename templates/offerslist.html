@@ -89,8 +89,7 @@
                     <th>Oferta</th>
                     <th>Wystawiający</th>
                     <th>Dodano</th>
-                    <th>Z</th>
-                    <th>Do</th>
+                    <th>Maksymalna zapłata</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -99,8 +98,7 @@
                         <td><p><a href="{% url 'offer' offer.pk %}">{{ offer.title }}</a></p></td>
                         <td><p><a href="{% url 'user' offer.author %}">{{ offer.author }}</a></p></td>
                         <td><p>{{ offer.creation_date.date }}</p></td>
-                        <td><p></p></td>
-                        <td><p></p></td>
+                        <td><p class="pull-right">{{ offer.price_cap }} zł</p></td>
                     </tr>
                 {% endfor %}
                 </tbody>
