@@ -10,7 +10,6 @@
             </div>
             <form method="post">
                 {% csrf_token %}
-                <!-- Form start -->
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -20,27 +19,25 @@
                                    class="form-control input-md">
                         </div>
                     </div>
-                    <!-- Text input-->
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label" for="category">Kategoria</label>
-                            <input id="category" name="category" type="text" placeholder="" class="form-control input-md">
-                        </div>
-                    </div>
-                    <!-- Text input-->
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label class="control-label" for="earliest_pickup">Najwcześniejsza data odbioru</label>
-                            <input id="earliest_pickup" name="earliest_pickup" type="date" placeholder="DD - MM - YYYY"
+                            <input id="category" name="category" type="text" placeholder=""
                                    class="form-control input-md">
                         </div>
                     </div>
-                    <!-- Text input -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="earliest_pickup">Najwcześniejsza data odbioru</label>
+                            <input id="earliest_pickup" name="earliest_pickup" type="date" placeholder="YYYY-MM-DD"
+                                   class="form-control input-md">
+                        </div>
+                    </div>
                     <div class="col-md-3">
                         <div class="form-group">
                             <div class="form-group">
                                 <label class="control-label" for="latest_pickup">Najpóźniejsza data odbioru</label>
-                                <input id="latest_pickup" name="latest_pickup" type="date" placeholder="DD - MM - YYYY"
+                                <input id="latest_pickup" name="latest_pickup" type="date" placeholder="YYYY-MM-DD"
                                        class="form-control input-md">
                             </div>
                         </div>
@@ -50,20 +47,18 @@
                         <div class="form-group">
                             <label class="control-label" for="earliest_delivery">Najwcześniejsza data dostawy</label>
                             <input id="earliest_delivery" name="earliest_delivery" type="date"
-                                   placeholder="DD - MM - YYYY" class="form-control input-md">
+                                   placeholder="YYYY-MM-DD" class="form-control input-md">
                         </div>
                     </div>
-                    <!-- Text input -->
                     <div class="col-md-3">
                         <div class="form-group">
                             <div class="form-group">
                                 <label class="control-label" for="latest_delivery">Najpóźniejsza data dostawy</label>
                                 <input id="latest_delivery" name="latest_delivery" type="date"
-                                       placeholder="DD - MM - YYYY" class="form-control input-md">
+                                       placeholder="YYYY-MM-DD" class="form-control input-md">
                             </div>
                         </div>
                     </div>
-                    <!-- Text input -->
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label" for="description">Treść oferty</label>
@@ -71,7 +66,6 @@
                                       class="form-control input-md ui-resizable"></textarea>
                         </div>
                     </div>
-                    <!-- Dimensions -->
                     <div class="col-md-2">
                         <div class="form-group">
                             <label class="control-label" for="length">Długość (cm)</label>
@@ -108,7 +102,6 @@
                             <input id="price" name="price" type="number" placeholder="0" class="form-control input-md">
                         </div>
                     </div>
-                    <!-- Button -->
                     <div class="col-md-12">
                         <div class="form-group">
                             <button id="accept" name="accept" class="btn btn-default">Złóż ofertę</button>
@@ -117,6 +110,5 @@
                 </div>
             </form>
         </div>
-        <!-- form end -->
     </div>
 {% endblock content %}
