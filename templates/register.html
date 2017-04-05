@@ -3,34 +3,45 @@
 {% block title %}Rejestracja{% endblock %}
 
 {% block content %}
-{% if message %}
-<div class="alert alert-danger" role="alert">
-    <strong>Podany login jest zajęty.</strong>
-</div>
-{% endif %}
-<div class="container login-container">
-      <form class="form-signin" name="LoginForm" action="{% url 'register' %}" method="post">
-        {% csrf_token %}
-        <h2 class="form-signin-heading">Zarejestruj się</h2>
-        <label for="inputLogin" class="sr-only">Login</label>
-        <input id="inputLogin" name="Login" class="form-control" placeholder="Login" required="" autofocus="" type="text">
-        <label for="inputPassword" class="sr-only">Hasło</label>
-        <input id="inputPassword" name="Password" class="form-control" placeholder="Hasło" required="" type="password">
-        <label for="inputEmail" class="sr-only">Email</label>
-        <input id="inputEmail" name="Email" class="form-control" placeholder="Email" required="" autofocus="" type="email">
+    {% if message %}
+        <div class="alert alert-danger" role="alert">
+            <strong>Podany login jest zajęty.</strong>
+        </div>
+    {% endif %}
+    <div class="container login-container">
+        <form class="form-signin" name="LoginForm" action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            <h2 class="form-signin-heading">Zarejestruj się</h2>
+            <label for="inputLogin" class="sr-only">Login</label>
+            <input id="inputLogin" name="Login" class="form-control" placeholder="Login" required="" autofocus=""
+                   type="text">
+            <label for="inputPassword" class="sr-only">Hasło</label>
+            <input id="inputPassword" name="Password" class="form-control" placeholder="Hasło" required=""
+                   type="password">
+            <label for="inputEmail" class="sr-only">Email</label>
+            <input id="inputEmail" name="Email" class="form-control" placeholder="Email" required="" autofocus=""
+                   type="email">
 
-        <label for="inputName" class="sr-only">Imię</label>
-        <input id="inputName" name="Name" class="form-control" placeholder="Imię" required="" autofocus="" type="text">
-        <label for="inputSurname" class="sr-only">Nazwisko</label>
-        <input id="inputSurname" name="Surname" class="form-control" placeholder="Nazwisko" required="" autofocus="" type="text">
-        <label for="inputPhone" class="sr-only">Numer Telefonu</label>
-        <input id="inputPhone" name="Phone" class="form-control" placeholder="Numer Telefonu" required="" autofocus="" type="text">
-        <label for="inputStreet" class="sr-only">Ulica</label>
-        <input id="inputStreet" name="Street" class="form-control" placeholder="Ulica" required="" autofocus="" type="text">
-        <label for="inputPostcode" class="sr-only">Kod pocztowy</label>
-        <input id="inputPostcode" name="Postcode" class="form-control" placeholder="Kod pocztowy" required="" autofocus="" type="text">
+            <label for="inputName" class="sr-only">Imię</label>
+            <input id="inputName" name="Name" class="form-control" placeholder="Imię" required="" autofocus=""
+                   type="text">
+            <label for="inputSurname" class="sr-only">Nazwisko</label>
+            <input id="inputSurname" name="Surname" class="form-control" placeholder="Nazwisko" required="" autofocus=""
+                   type="text">
+            <label for="inputPhone" class="sr-only">Numer Telefonu</label>
+            <input id="inputPhone" name="Phone" class="form-control" placeholder="Numer Telefonu" required=""
+                   autofocus="" type="text">
+            <label for="inputStreet" class="sr-only">Ulica</label>
+            <input id="inputStreet" name="Street" class="form-control" placeholder="Ulica" required="" autofocus=""
+                   type="text">
+            <label for="inputCity" class="sr-only">Miasto</label>
+            <input id="inputCity" name="City" class="form-control" placeholder="Miasto" required=""
+                   autofocus="" type="text">
+            <label for="inputPostcode" class="sr-only">Kod pocztowy</label>
+            <input id="inputPostcode" name="Postcode" class="form-control" placeholder="Kod pocztowy" required=""
+                   autofocus="" type="text">
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj</button>
-      </form>
-</div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj</button>
+        </form>
+    </div>
 {% endblock content %}

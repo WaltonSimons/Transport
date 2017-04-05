@@ -31,6 +31,17 @@
             <div style="width:100%;border-top:1px solid silver">
                 <p style="padding:15px;">
                 <div class="row">
+                    <div class="col-md-4">
+                        <strong>Z: </strong> {{ offer.start_location.name }}, {{ offer.formatted_start_postcode }}
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Do </strong> {{ offer.end_location.name }}, {{ offer.formatted_end_postcode }}
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Odległość: </strong> {{ offer.get_distance }} km
+                    </div>
+                </div>
+                <div class="row">
                     {% if offer.width or offer.length or offer.height %}
                     <div class="col-md-6">
                         <strong>Wymiary: </strong> {{ offer.width }} x {{ offer.length }} x {{ offer.height }} cm

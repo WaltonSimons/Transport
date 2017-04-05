@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from .models import SiteUser, User, Offer, Conversation
 from datetime import datetime
 from .messages import get_conversation, get_messages, send_message, create_conversation
+from .maps import get_location_model
 from django.db.models import Q
 # Create your views here.
 
@@ -46,11 +47,13 @@ def register_view(request):
         surname = request.POST.get('Surname')
         phone = request.POST.get('Phone')
         street = request.POST.get('Street')
+        city = request.POST.get('City')
         postcode = request.POST.get('Postcode')
+        location = get_location_model(city, postcode)
         if not User.objects.filter(username=username).exists():
             user = User.objects.create_user(username, email, password)
             site_user = SiteUser(user=user, name=name, surname=surname, phone_number=phone, street=street,
-                                 postcode=postcode)
+                                 location=location)
             site_user.save()
             return redirect('login')
         else:
@@ -83,6 +86,15 @@ def add_offer_view(request):
         latest_delivery = request.POST.get('latest_delivery')
         latest_delivery = None if latest_delivery == '' else latest_delivery
         description = request.POST.get('description')
+
+        start_city = request.POST.get('start_city')
+        start_postcode = request.POST.get('start_postcode')
+        start_location = get_location_model(start_city, start_postcode)
+
+        end_city = request.POST.get('end_city')
+        end_postcode = request.POST.get('end_postcode')
+        end_location = get_location_model(end_city, end_postcode)
+
         length = request.POST.get('length')
         length = None if length == '' else length
         width = request.POST.get('width')
@@ -96,7 +108,8 @@ def add_offer_view(request):
         offer = Offer.objects.create(title=title, creation_date=date, author=author, category=category, earliest_pickup=earliest_pickup,
                                      latest_pickup=latest_pickup, earliest_delivery=earliest_delivery,
                                      latest_delivery=latest_delivery, description=description, length=length,
-                                     width=width, height=height, weight=weight, price_cap=price)
+                                     width=width, height=height, weight=weight, price_cap=price, start_location=start_location,
+                                     end_location=end_location)
     return render(request, 'addoffer.html')
 
 
