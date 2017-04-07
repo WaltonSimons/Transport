@@ -3,59 +3,63 @@
 {% block title %}Użytkownik {{ user.username }}{% endblock %}
 
 {% block content %}
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
-	</div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
 
 
-          <div class="panel panel-info">
+        <div class="panel panel-info">
             <div class="panel-heading">
-              <h3 class="panel-title">{{ user.username }}</h3>
+                <h3 class="panel-title">{{ user.username }}</h3>
             </div>
             <div class="panel-body">
-              <div class="row">
-                <div class=" col-md-9 col-lg-9 ">
-                  <table class="table table-user-information">
-                    <tbody>
-                      <tr>
-                        <td>Imię</td>
-                        <td>{{ user.siteuser.name }}</td>
-                      </tr>
-                      <tr>
-                        <td>Nazwisko</td>
-                        <td>{{ user.siteuser.surname }}</td>
-                      </tr>
-                      <tr>
-                        <td>Numer Telefonu</td>
-                        <td>{{ user.siteuser.phone_number }}</td>
-                      </tr>
+                <div class="row">
+                    <div class=" col-md-9 col-lg-9 ">
+                        <table class="table table-user-information">
+                            <tbody>
+                            <tr>
+                                <td>Imię</td>
+                                <td>{{ user.siteuser.name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Nazwisko</td>
+                                <td>{{ user.siteuser.surname }}</td>
+                            </tr>
+                            <tr>
+                                <td>Numer Telefonu</td>
+                                <td>{{ user.siteuser.phone_number }}</td>
+                            </tr>
 
-                         <tr>
-                             <tr>
-                        <td>Ulica</td>
-                        <td>{{ user.siteuser.street }}</td>
-                      </tr>
-                        <tr>
-                        <td>Miejscowość</td>
-                        <td>{{ user.siteuser.location.name }}</td>
-                      </tr>
-                      <tr>
-                        <td>Kod pocztowy</td>
-                        <td>{{ user.siteuser.formatted_postcode }}</td>
+                            <tr>
+                            <tr>
+                                <td>Ulica</td>
+                                <td>{{ user.siteuser.street }}</td>
+                            </tr>
+                            <tr>
+                                <td>Miejscowość</td>
+                                <td>{{ user.siteuser.location.name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Kod pocztowy</td>
+                                <td>{{ user.siteuser.formatted_postcode }}</td>
 
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-                 <div class="panel-footer">
-                        <a href="{% url 'conversation' user.username %}" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i> wyślij wiadomość</a>
-                        <span class="pull-right">
-                            <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-user"></i> dodaj do kontaktów</a>
-                        </span>
+                            </tbody>
+                        </table>
                     </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                {% if user.username != profile_user.username %}
+                    <a href="{% url 'conversation' profile_user.username %}" type="button"
+                       class="btn btn-sm btn-primary"><i
+                            class="glyphicon glyphicon-envelope"></i> wyślij wiadomość</a>
+                    <span class="pull-right">
+                            <a type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-user"></i> dodaj do kontaktów</a>
+                        </span>
+                {% endif %}
+            </div>
 
-          </div>
         </div>
-      </div>
+    </div>
+    </div>
 {% endblock content %}

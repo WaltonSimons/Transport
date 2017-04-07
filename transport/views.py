@@ -15,7 +15,8 @@ def index(request):
         box = True
     else:
         box = False
-    return render(request, 'index.html', {'box': box})
+    offers = Offer.objects.all()
+    return render(request, 'index.html', {'box': box, 'offers': offers})
 
 
 def login_view(request):
@@ -63,7 +64,7 @@ def register_view(request):
 
 def user_view(request, username):
     user = get_object_or_404(User, username=username)
-    return render(request, 'user.html', {'userprofile': user.siteuser, 'user': user})
+    return render(request, 'user.html', {'userprofile': user.siteuser, 'profile_user': user})
 
 
 def offer_view(request, offer_id):
@@ -141,6 +142,8 @@ def offers_list_view(request):
 
 
 def conversation_view(request, username):
+    if username == request.user.username:
+        return redirect('index')
     user2 = get_object_or_404(User, username=username)
     conversation = get_conversation(request.user, user2)
     if request.POST:

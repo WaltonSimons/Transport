@@ -4,14 +4,13 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-xs-4 item-photo">
-            <img style="max-width:100%;"
-                 src="https://ak1.ostkcdn.com/images/products/8818677/Samsung-Galaxy-S4-I337-16GB-AT-T-Unlocked-GSM-Android-Cell-Phone-85e3430e-6981-4252-a984-245862302c78_600.jpg"/>
-        </div>
         <div class="col-xs-5" style="border:0px solid gray">
             <h3>{{ offer.title }}</h3>
             <h5>dodano {{ offer.creation_date.date }}</h5>
-            <h5>przez <a href="{% url 'user' offer.author %}">{{ offer.author }}</a> · <a href="{% url 'conversation' offer.author %}" class="glyphicon glyphicon-envelope"></a> ·
+            <h5>przez <a href="{% url 'user' offer.author %}">{{ offer.author }}</a>
+                {% if user.username != offer.author.username %} ·
+                    <a href="{% url 'conversation' offer.author %}" class="glyphicon glyphicon-envelope"></a>
+                {% endif %}·
                 <small>(20 opinii)</small>
             </h5>
 
@@ -43,9 +42,9 @@
                 </div>
                 <div class="row">
                     {% if offer.width or offer.length or offer.height %}
-                    <div class="col-md-6">
-                        <strong>Wymiary: </strong> {{ offer.width }} x {{ offer.length }} x {{ offer.height }} cm
-                    </div>
+                        <div class="col-md-6">
+                            <strong>Wymiary: </strong> {{ offer.width }} x {{ offer.length }} x {{ offer.height }} cm
+                        </div>
                     {% endif %}
                     <div class="col-md-6">
                         <strong>Waga: </strong> {{ offer.weight }} kg
@@ -71,6 +70,46 @@
                 <small>
                 </small>
             </div>
+            <div id="map"></div>
+            <script>
+                function initMap() {
+                    var directionsDisplay;
+                    var directionsService = new google.maps.DirectionsService();
+                    directionsDisplay = new google.maps.DirectionsRenderer();
+                    var start = {lat: {{ offer.start_location.latitude }}, lng: {{ offer.start_location.longitude }}};
+                    var end = {lat: {{ offer.end_location.latitude }}, lng: {{ offer.end_location.longitude }}};
+                    var middle = {lat: (start.lat + end.lat) / 2, lng: (start.lng + end.lng) / 2}
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 8,
+                        center: middle
+                    });
+                    var start_marker = new google.maps.Marker({
+                        position: start,
+                        map: map
+                    });
+                    var end_marker = new google.maps.Marker({
+                        position: end,
+                        map: map
+                    });
+                    var request = {
+                        origin: start,
+                        destination: end,
+                        travelMode: google.maps.TravelMode.DRIVING
+                    };
+                    directionsService.route(request, function (response, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            directionsDisplay.setDirections(response);
+                            directionsDisplay.setMap(map);
+                        } else {
+                            alert("Directions Request from " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed: " + status);
+                        }
+                    });
+                }
+            </script>
+            <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCX4fUgd4DX_udsjYDskTEaylSw3UWodQk&callback=initMap">
+            </script>
+
         </div>
     </div>
 {% endblock content %}
