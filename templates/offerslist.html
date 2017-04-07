@@ -91,6 +91,7 @@
                     <th>Dodano</th>
                     <th>Z</th>
                     <th>Do</th>
+                    <th>Dystans</th>
                     <th class="pull-right">Maksymalna zapłata</th>
                 </tr>
                 </thead>
@@ -102,6 +103,7 @@
                         <td><p>{{ offer.creation_date.date }}</p></td>
                         <td><p>{{ offer.start_location.name }}</p></td>
                         <td><p>{{ offer.end_location.name }}</p></td>
+                        <td><p>{{ offer.get_distance }} km</p></td>
                         <td><p class="pull-right">{{ offer.price_cap }} zł</p></td>
                     </tr>
                 {% endfor %}

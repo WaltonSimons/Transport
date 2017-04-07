@@ -57,8 +57,8 @@ class Offer(models.Model):
     def get_distance(self):
         location1 = self.start_location
         location2 = self.end_location
-        coord1 = [location1.longitude, location1.latitude]
-        coord2 = [location2.longitude, location2.latitude]
+        coord1 = [location1.latitude, location1.longitude]
+        coord2 = [location2.latitude, location2.longitude]
         return round(geocoder.distance(coord1, coord2), 1)
 
     def formatted_start_postcode(self):

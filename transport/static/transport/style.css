@@ -3,9 +3,9 @@
 }
 
 .map {
-        height: 600px;
-        width: 100%;
-       }
+    height: 600px;
+    width: 100%;
+}
 
 .well-block {
     background-color: #fff;
@@ -13,10 +13,10 @@
     padding: 40px;
 }
 
-.message{
+.message {
     font-size: 1.2em;
     width: auto;
-    max-width:300px;
+    max-width: 300px;
     border-radius: 15px;
     padding: 10px;
     margin-bottom: 10px;
@@ -28,20 +28,26 @@
     border-bottom-left-radius: 0px;
 
 }
-.message-out{
-    background-color : rgb(130, 230, 47);
+
+.message-out {
+    background-color: rgb(130, 230, 47);
     margin-right: 20px;
     color: #FFFFFF;
     border-bottom-right-radius: 0px;
 }
 
-.message-date{
+.message-date {
     color: #A4A4A4;
     text-align: center;
     margin-bottom: 5px;
 }
 
-.well-block{
+.well-block {
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
 }

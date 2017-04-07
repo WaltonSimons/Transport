@@ -18,13 +18,13 @@ def get_location_model(name, postcode):
         location.name = name
         location.postcode = postcode
         coordinates = get_coordinates(name, postcode)
-        location.longitude = coordinates[0]
-        location.latitude = coordinates[1]
+        location.latitude = coordinates[0]
+        location.longitude = coordinates[1]
         location.save()
     return location
 
 
 def distance_between_locations(location1, location2):
-    coord1 = [location1.longitude, location1.latitude]
-    coord2 = [location2.longitude, location2.latitude]
+    coord1 = [location1.latitude, location1.longitude]
+    coord2 = [location2.latitude, location2.longitude]
     return distance_between_coordinates(coord1, coord2)
