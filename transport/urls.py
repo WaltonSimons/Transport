@@ -14,4 +14,6 @@ urlpatterns = [
     url(r'browse/', views.offers_list_view, name='offers_list'),
     url(r'inbox/(?P<username>[\w\-]+)/', views.conversation_view, name='conversation'),
     url(r'inbox/', views.inbox_view, name='inbox'),
+    url(r'createcompany/', views.create_company_view, name='create_company'),
+    url(r'company/', views.company_view, name='company'),
 ]

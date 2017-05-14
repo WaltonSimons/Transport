@@ -11,12 +11,15 @@ class SiteUser(models.Model):
     name = models.TextField(max_length=255)
     surname = models.TextField(max_length=255)
     phone_number = models.TextField(max_length=15, blank=True, null=True)
-    company = models.OneToOneField('Company', blank=True, null=True)
+    company = models.ForeignKey('Company', related_name='employees', blank=True, null=True)
     street = models.TextField(max_length=255, blank=True, null=True)
     location = models.ForeignKey('Location', blank=True, null=True)
 
     def formatted_postcode(self):
         return str(self.location.postcode)[0:2] + '-' + str(self.location.postcode)[2:5]
+
+    def has_company(self):
+        return self.company is not None
 
 
 class Company(models.Model):
@@ -24,6 +27,7 @@ class Company(models.Model):
     nip = models.IntegerField()
     street = models.TextField(max_length=255, blank=True, null=True)
     location = models.ForeignKey('Location', blank=True, null=True)
+    owner = models.ForeignKey('SiteUser', related_name='owned_company', blank=True, null=True)
 
 
 class Location(models.Model):

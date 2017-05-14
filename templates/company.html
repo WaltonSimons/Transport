@@ -1,0 +1,68 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Użytkownik {{ user.username }}{% endblock %}
+
+{% block content %}
+    {% if user.siteuser.has_company %}
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ company.name }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class=" col-md-9 col-lg-9 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                <tr>
+                                    <td>NIP</td>
+                                    <td>{{ company.nip }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Ulica</td>
+                                    <td>{{ company.street }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Miejscowość</td>
+                                    <td>{{ company.location.name }}</td>
+                                </tr>
+
+                                <tr>
+                                <tr>
+                                    <td>Kod pocztowy</td>
+                                    <td>{{ company.location.postcode }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Właściciel</td>
+                                    <td>
+                                        <a href="{% url 'user' company.owner.user.username %}">{{ company.owner.user.username }}</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Kod pocztowy</td>
+                                    <td>{{ user.siteuser.formatted_postcode }}</td>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <h4>Pracownicy:</h4>
+                    {% for employee in company.employees.all %}
+                        <li><a href="{% url 'user' employee.user.username %}">{{ employee.user.username }}</a></li>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+        </div>
+    {% else %}
+        <div class="jumbotron">
+            <h2>Nie posiadasz jeszcze firmy</h2><br>
+            <a href="{% url 'create_company' %}" class="btn btn-default">Załóż</a>
+        </div>
+    {% endif %}
+{% endblock content %}

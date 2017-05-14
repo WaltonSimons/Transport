@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
-from .models import SiteUser, User, Offer, Conversation
+from .models import SiteUser, User, Offer, Conversation, Company
 from datetime import datetime
 from .messages import get_conversation, get_messages, send_message, create_conversation
 from .maps import get_location_model
-from django.db.models import Q
 # Create your views here.
 
 
@@ -167,3 +166,38 @@ def inbox_view(request):
         senders.append(c.get_other_user(request.user))
     zipped = zip(conversations, senders)
     return render(request, 'inbox.html', {'conversations': zipped})
+
+
+def company_view(request):
+    company = get_object_or_404(Company, pk=request.user.siteuser.company.pk)
+    if request.GET:
+        remove = request.GET.get('remove')
+        add = request.GET.get('add')
+        if add is not None:
+            user = get_object_or_404(User, username=add)
+            user.siteuser.company = company
+            user.siteuser.save()
+        if remove is not None:
+            user = get_object_or_404(User, username=remove)
+            if user.siteuser.company == company:
+                user.siteuser.company = None
+                user.siteuser.save()
+    return render(request, 'company.html', {'company': company})
+
+
+def create_company_view(request):
+    if request.POST:
+        name = request.POST.get('Name')
+        nip = request.POST.get('NIP')
+        street = request.POST.get('Street')
+        city = request.POST.get('City')
+        postcode = request.POST.get('Postcode')
+        location = get_location_model(city, postcode)
+        owner = request.user.siteuser
+
+        company = Company.objects.create(name=name, nip=nip, street=street, location=location, owner=owner)
+
+        request.user.siteuser.company = company
+        request.user.siteuser.save()
+        return redirect('company')
+    return render(request, 'createcompany.html', {})
