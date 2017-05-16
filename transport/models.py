@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+from django.utils import timezone
 import geocoder
+
 
 # Create your models here.
 
@@ -30,6 +32,19 @@ class Company(models.Model):
     owner = models.ForeignKey('SiteUser', related_name='owned_company', blank=True, null=True)
 
 
+class Vehicle(models.Model):
+    model = models.TextField(max_length=255, blank=True, null=True)
+    cargo_type = models.ForeignKey('CargoType', blank=True, null=True)
+    max_capacity = models.FloatField(blank=True, null=True)
+    length = models.IntegerField(blank=True, null=True)
+    width = models.IntegerField(blank=True, null=True)
+    height = models.IntegerField(blank=True, null=True)
+
+
+class CargoType(models.Model):
+    name = models.TextField(max_length=255)
+
+
 class Location(models.Model):
     name = models.TextField(max_length=255, primary_key=True)
     postcode = models.TextField(max_length=5)
@@ -41,22 +56,25 @@ class Location(models.Model):
 
 
 class Offer(models.Model):
-    creation_date = models.DateTimeField(default=datetime.now())
+    creation_date = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, related_name='offers', null=True)
     title = models.TextField(max_length=512)
     description = models.TextField(max_length=5000)
-    earliest_pickup = models.DateTimeField(default=datetime.now(), blank=True, null=True)
-    earliest_delivery = models.DateTimeField(default=datetime.now(), blank=True, null=True)
-    latest_pickup = models.DateTimeField(default=datetime.now(), blank=True, null=True)
-    latest_delivery = models.DateTimeField(default=datetime.now(), blank=True, null=True)
-    category = models.TextField(max_length=255, blank=True, null=True) #TODO: Dodać model 'Category'
+    earliest_pickup = models.DateTimeField(default=timezone.now, blank=True, null=True)
+    earliest_delivery = models.DateTimeField(default=timezone.now, blank=True, null=True)
+    latest_pickup = models.DateTimeField(default=timezone.now, blank=True, null=True)
+    latest_delivery = models.DateTimeField(default=timezone.now, blank=True, null=True)
+    category = models.ForeignKey('Category')
     length = models.IntegerField(blank=True, null=True)
     width = models.IntegerField(blank=True, null=True)
     height = models.IntegerField(blank=True, null=True)
     weight = models.FloatField(blank=True, null=True)
+    cargo_types = models.ManyToManyField('CargoType', related_name='offers')
+    services = models.ManyToManyField('Service', related_name='offers')
     price_cap = models.IntegerField(blank=True, null=True)
     start_location = models.ForeignKey(Location, blank=True, null=True, related_name='offers_start')
     end_location = models.ForeignKey(Location, blank=True, null=True, related_name='offers_end')
+    status = models.ForeignKey('OfferStatus', blank=True, null=True)
 
     def get_distance(self):
         location1 = self.start_location
@@ -72,9 +90,34 @@ class Offer(models.Model):
         return str(self.end_location.postcode)[0:2] + '-' + str(self.end_location.postcode)[2:5]
 
 
+class OfferStatus(models.Model):
+    name = models.TextField(max_length=255, blank=True, null=True)
+
+
+class Service(models.Model):
+    name = models.TextField(max_length=512, blank=True, null=True)
+
+
+class Category(models.Model):
+    name = models.TextField(max_length=512)
+    parentCategory = models.ForeignKey('Category', blank=True, null=True)
+
+
+class UserRating(models.Model):
+    value = models.IntegerField()
+    ratedUser = models.ForeignKey('SiteUser', related_name='received_ratings')
+    ratingUser = models.ForeignKey('SiteUser', related_name='given_ratings')
+
+
+class OfferMatch(models.Model):
+    user = models.ForeignKey('SiteUser')
+    offer = models.ForeignKey('Offer')
+    value = models.FloatField()
+
+
 class Conversation(models.Model):
     users = models.ManyToManyField(User, related_name='conversations')
-    last_message_date = models.DateTimeField(default=datetime.now())
+    last_message_date = models.DateTimeField(default=timezone.now)
 
     def last_message_short(self):
         last_message = self.messages.order_by('-creation_date')[0].text
@@ -92,4 +135,4 @@ class Message(models.Model):
     conversation = models.ForeignKey(Conversation, related_name='messages')
     sender = models.ForeignKey(User, related_name='sender')
     text = models.TextField(max_length=5000)
-    creation_date = models.DateTimeField(default=datetime.now())
+    creation_date = models.DateTimeField(default=timezone.now)
