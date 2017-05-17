@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
-from .models import SiteUser, User, Offer, Conversation, Company
+from .models import SiteUser, User, Offer, Conversation, Company, Category
 from datetime import datetime
 from .messages import get_conversation, get_messages, send_message, create_conversation
 from .maps import get_location_model
+from .offer_matching import create_match
 # Create your views here.
 
 
@@ -77,6 +78,7 @@ def add_offer_view(request):
         date = datetime.now()
         author = request.user
         category = request.POST.get('category')
+        category = Category.objects.filter(pk=0)[0]
         earliest_pickup = request.POST.get('earliest_pickup')
         earliest_pickup = None if earliest_pickup == '' else earliest_pickup
         latest_pickup = request.POST.get('latest_pickup')
@@ -121,6 +123,7 @@ def offers_list_view(request):
         height = request.GET.get('height')
         weight = request.GET.get('weight')
         min_price = request.GET.get('min_price')
+        sort_type = request.GET.get('sort')
         queryset = Offer.objects.all()
         if title is not None:
             queryset = queryset.filter(title__contains=title)
@@ -134,7 +137,16 @@ def offers_list_view(request):
             queryset = queryset.filter(weight__lte=weight)
         if min_price is not None:
             queryset = queryset.filter(price_cap__gte=min_price)
-        newest_offers = queryset.order_by('-creation_date')[0:20]
+        if sort_type is not None:
+            if sort_type == 'match':
+                for offer in queryset:
+                    create_match(offer, request.user.siteuser)
+                sort_type = 'offer_match__value'
+            if sort_type == 'latest':
+                sort_type = '-creation_date'
+            if sort_type == 'price':
+                sort_type = 'price_cap'
+        newest_offers = queryset.order_by(sort_type)[0:20]
     else:
         newest_offers = Offer.objects.order_by('-creation_date')[0:20]
     return render(request, 'offerslist.html', {'newest_offers': newest_offers})
