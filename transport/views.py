@@ -78,6 +78,7 @@ def add_offer_view(request):
         date = datetime.now()
         author = request.user
         category = request.POST.get('category')
+        category = Category.objects.filter(pk=int(category))[0]
         earliest_pickup = request.POST.get('earliest_pickup')
         earliest_pickup = None if earliest_pickup == '' else earliest_pickup
         latest_pickup = request.POST.get('latest_pickup')
@@ -106,10 +107,12 @@ def add_offer_view(request):
         weight = None if weight == '' else weight
         price = request.POST.get('price')
 
-        offer = Offer.objects.create(title=title, creation_date=date, author=author, category=category, earliest_pickup=earliest_pickup,
+        offer = Offer.objects.create(title=title, creation_date=date, author=author, category=category,
+                                     earliest_pickup=earliest_pickup,
                                      latest_pickup=latest_pickup, earliest_delivery=earliest_delivery,
                                      latest_delivery=latest_delivery, description=description, length=length,
-                                     width=width, height=height, weight=weight, price_cap=price, start_location=start_location,
+                                     width=width, height=height, weight=weight, price_cap=price,
+                                     start_location=start_location,
                                      end_location=end_location)
     categories = Category.objects.all()
     categories = zip([cat.pk for cat in categories], [cat.name for cat in categories])
@@ -142,12 +145,18 @@ def offers_list_view(request):
             if sort_type == 'match':
                 for offer in queryset:
                     create_match(offer, request.user.siteuser)
-                sort_type = 'offer_match__value'
+                newest_offers = Offer.objects.raw('''SELECT o.*
+                                                      FROM transport_offer AS o
+                                                        JOIN transport_offermatch AS m ON o.id = m.offer_id
+                                                      WHERE m.user_id = '''+ str(request.user.pk) +'''
+                                                      ORDER BY -m.value;
+                                                  ''')
             if sort_type == 'latest':
                 sort_type = '-creation_date'
             if sort_type == 'price':
                 sort_type = 'price_cap'
-        newest_offers = queryset.order_by(sort_type)[0:20]
+        if sort_type != 'match':
+            newest_offers = queryset.order_by(sort_type)[0:20]
     else:
         newest_offers = Offer.objects.order_by('-creation_date')[0:20]
     return render(request, 'offerslist.html', {'newest_offers': newest_offers})
@@ -172,8 +181,8 @@ def conversation_view(request, username):
 
 
 def inbox_view(request):
-    conversations = Conversation.objects.filter(users=request.user).exclude(messages=None)\
-                    .order_by('-last_message_date')[0:20]
+    conversations = Conversation.objects.filter(users=request.user).exclude(messages=None) \
+                        .order_by('-last_message_date')[0:20]
     senders = []
     for c in conversations:
         senders.append(c.get_other_user(request.user))
