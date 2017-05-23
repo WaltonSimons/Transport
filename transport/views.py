@@ -78,7 +78,6 @@ def add_offer_view(request):
         date = datetime.now()
         author = request.user
         category = request.POST.get('category')
-        category = Category.objects.filter(pk=0)[0]
         earliest_pickup = request.POST.get('earliest_pickup')
         earliest_pickup = None if earliest_pickup == '' else earliest_pickup
         latest_pickup = request.POST.get('latest_pickup')
@@ -112,7 +111,9 @@ def add_offer_view(request):
                                      latest_delivery=latest_delivery, description=description, length=length,
                                      width=width, height=height, weight=weight, price_cap=price, start_location=start_location,
                                      end_location=end_location)
-    return render(request, 'addoffer.html')
+    categories = Category.objects.all()
+    categories = zip([cat.pk for cat in categories], [cat.name for cat in categories])
+    return render(request, 'addoffer.html', {'categories': categories})
 
 
 def offers_list_view(request):

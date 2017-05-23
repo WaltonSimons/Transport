@@ -22,8 +22,12 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label" for="category">Kategoria</label>
-                            <input id="category" name="category" type="text" placeholder=""
+                            <select id="category" name="category" type="text" placeholder=""
                                    class="form-control input-md">
+                                {% for id, name in categories %}
+                                    <option value="{{ id }}">{{ name }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                                         <div class="col-md-3">
