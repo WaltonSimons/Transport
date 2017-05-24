@@ -60,9 +60,13 @@
                         </span>
                 {% endif %}
                 {% if user.username == profile_user.username %}
+                    <span class="pull-right">
+                            <a href="{% url 'add_vehicle' %}" type="button" method="get" class="btn btn-sm btn-success"><i
+                                    class="glyphicon glyphicon-plus"></i> dodaj pojazd</a>
+                        </span>
                     <h4>Pojazdy:</h4>
                     {% for vehicle in user.siteuser.vehicles.all %}
-                        <li><a href="">{{ vehicle.model }}</a></li>
+                        <li><a href="{% url 'vehicle' vehicle.id %}">{{ vehicle.model }}</a></li>
                     {% endfor %}
                 {% endif %}
             </div>

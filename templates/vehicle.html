@@ -1,0 +1,47 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Użytkownik {{ profile_user.username }}{% endblock %}
+
+{% block content %}
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ vehicle.model }}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class=" col-md-9 col-lg-9 ">
+                        <table class="table table-user-information">
+                            <tbody>
+                            <tr>
+                                <td>Typ</td>
+                                <td>{{ vehicle.cargo_type.name }}</td>
+                            </tr>
+                            <tr>
+                                <td>Maksymalna ładowność (w kg)</td>
+                                <td>{{ vehicle.max_capacity }}</td>
+                            </tr>
+                            <tr>
+                                <td>Długość</td>
+                                <td>{{ vehicle.length }}</td>
+                            </tr>
+                            <tr>
+                            <tr>
+                                <td>Szerokość</td>
+                                <td>{{ vehicle.width }}</td>
+                            </tr>
+                            <tr>
+                                <td>Wysokość</td>
+                                <td>{{ vehicle.height }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock content %}

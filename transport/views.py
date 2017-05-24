@@ -246,3 +246,8 @@ def add_vehicle_view(request):
     cargo_types = CargoType.objects.all()
     cargo_types = zip([cat.pk for cat in cargo_types], [cat.name for cat in cargo_types])
     return render(request, 'addvehicle.html', {'cargo_types': cargo_types})
+
+
+def vehicle_view(request, vehicle_id):
+    vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
+    return render(request, 'vehicle.html', {'vehicle': vehicle})
