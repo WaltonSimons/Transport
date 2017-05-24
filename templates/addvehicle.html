@@ -1,0 +1,28 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Dodaj pojazd{% endblock %}
+
+{% block content %}
+    <div class="container login-container">
+        <form class="form-signin" name="Vehicle" action="{% url 'add_vehicle' %}" method="post">
+            {% csrf_token %}
+            <h2 class="form-signin-heading">Dodaj nowy pojazd</h2>
+            <input name="model" class="form-control" placeholder="Model pojazdu" required="" autofocus=""
+                   type="text">
+            <select name="cargo_type" class="form-control input-md">
+                {% for id, name in cargo_types %}
+                    <option value="{{ id }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+            <input name="capacity" class="form-control" placeholder="Maksymalna ładowność (w kg)" required=""
+                   type="number">
+            <input name="length" class="form-control" placeholder="Długość naczepy" required="" autofocus=""
+                   type="number">
+            <input name="width" class="form-control" placeholder="Szerokość naczepy" required="" autofocus=""
+                   type="number">
+            <input name="height" class="form-control" placeholder="Wysokość naczepy" required="" autofocus=""
+                   type="number">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Dodaj</button>
+        </form>
+    </div>
+{% endblock content %}

@@ -55,8 +55,15 @@
                             <a type="action" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-user"></i> dodaj do firmy</a>
                         </span>
                     <span class="pull-right">
-                            <a type="button" method="get" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-user"></i> dodaj do kontaktów</a>
+                            <a type="button" method="get" class="btn btn-sm btn-success"><i
+                                    class="glyphicon glyphicon-user"></i> dodaj do kontaktów</a>
                         </span>
+                {% endif %}
+                {% if user.username == profile_user.username %}
+                    <h4>Pojazdy:</h4>
+                    {% for vehicle in user.siteuser.vehicles.all %}
+                        <li><a href="">{{ vehicle.model }}</a></li>
+                    {% endfor %}
                 {% endif %}
             </div>
         </div>

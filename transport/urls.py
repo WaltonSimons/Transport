@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'inbox/', views.inbox_view, name='inbox'),
     url(r'createcompany/', views.create_company_view, name='create_company'),
     url(r'company/', views.company_view, name='company'),
+    url(r'addvehicle/', views.add_vehicle_view, name='add_vehicle'),
 ]

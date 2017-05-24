@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
-from .models import SiteUser, User, Offer, Conversation, Company, Category
+from .models import SiteUser, User, Offer, Conversation, Company, Category, CargoType, Vehicle
 from datetime import datetime
 from .messages import get_conversation, get_messages, send_message, create_conversation
 from .maps import get_location_model
 from .offer_matching import create_match
+
+
 # Create your views here.
 
 
@@ -148,7 +150,7 @@ def offers_list_view(request):
                 newest_offers = Offer.objects.raw('''SELECT o.*
                                                       FROM transport_offer AS o
                                                         JOIN transport_offermatch AS m ON o.id = m.offer_id
-                                                      WHERE m.user_id = '''+ str(request.user.pk) +'''
+                                                      WHERE m.user_id = ''' + str(request.user.pk) + '''
                                                       ORDER BY -m.value;
                                                   ''')
             if sort_type == 'latest':
@@ -191,6 +193,8 @@ def inbox_view(request):
 
 
 def company_view(request):
+    if request.user.siteuser.company is None:
+        return redirect('create_company')
     company = get_object_or_404(Company, pk=request.user.siteuser.company.pk)
     if request.GET:
         remove = request.GET.get('remove')
@@ -223,3 +227,22 @@ def create_company_view(request):
         request.user.siteuser.save()
         return redirect('company')
     return render(request, 'createcompany.html', {})
+
+
+def add_vehicle_view(request):
+    if request.POST:
+        model = request.POST.get('model')
+        cargo_type = CargoType.objects.filter(pk=int(request.POST.get('cargo_type')))[0]
+        max_capacity = request.POST.get('max_capacity')
+        length = request.POST.get('length')
+        width = request.POST.get('width')
+        height = request.POST.get('height')
+        owner = request.user.siteuser
+
+        vehicle = Vehicle.objects.create(model=model, cargo_type=cargo_type, max_capacity=max_capacity, length=length,
+                                         width=width, height=height, owner=owner)
+
+        return redirect('index')
+    cargo_types = CargoType.objects.all()
+    cargo_types = zip([cat.pk for cat in cargo_types], [cat.name for cat in cargo_types])
+    return render(request, 'addvehicle.html', {'cargo_types': cargo_types})

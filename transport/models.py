@@ -39,6 +39,7 @@ class Vehicle(models.Model):
     length = models.IntegerField(blank=True, null=True)
     width = models.IntegerField(blank=True, null=True)
     height = models.IntegerField(blank=True, null=True)
+    owner = models.ForeignKey('SiteUser', related_name='vehicles')
 
 
 class CargoType(models.Model):
