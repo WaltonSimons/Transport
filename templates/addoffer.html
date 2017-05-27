@@ -23,14 +23,17 @@
                         <div class="form-group">
                             <label class="control-label" for="category">Kategoria</label>
                             <select id="category" name="category"
-                                   class="form-control input-md">
-                                {% for id, name in categories %}
-                                    <option value="{{ id }}">{{ name }}</option>
+                                    class="form-control input-md">
+                                {% for parent_name, subcategories in categories %}
+                                    <optgroup label="{{ parent_name }}">
+                                    {% for id, name in subcategories %}
+                                        <option value="{{ id }}">{{ name }}</option>
+                                    {% endfor %}
                                 {% endfor %}
                             </select>
                         </div>
                     </div>
-                                        <div class="col-md-3">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label class="control-label" for="start_city">Lokacja odbioru</label>
                             <input id="start_city" name="start_city" type="text" placeholder="Miejscowość"

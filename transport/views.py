@@ -6,6 +6,7 @@ from datetime import datetime
 from .messages import get_conversation, get_messages, send_message, create_conversation
 from .maps import get_location_model
 from .offer_matching import create_match
+from .utilities import get_categories
 
 
 # Create your views here.
@@ -116,8 +117,7 @@ def add_offer_view(request):
                                      width=width, height=height, weight=weight, price_cap=price,
                                      start_location=start_location,
                                      end_location=end_location)
-    categories = Category.objects.all()
-    categories = zip([cat.pk for cat in categories], [cat.name for cat in categories])
+    categories = get_categories()
     return render(request, 'addoffer.html', {'categories': categories})
 
 
@@ -130,6 +130,7 @@ def offers_list_view(request):
         weight = request.GET.get('weight')
         min_price = request.GET.get('min_price')
         sort_type = request.GET.get('sort')
+        category = request.GET.get('category')
         queryset = Offer.objects.all()
         if title is not None:
             queryset = queryset.filter(title__contains=title)
@@ -143,6 +144,8 @@ def offers_list_view(request):
             queryset = queryset.filter(weight__lte=weight)
         if min_price is not None:
             queryset = queryset.filter(price_cap__gte=min_price)
+        if category is not None and category is not '':
+            queryset = queryset.filter(category=category)
         if sort_type is not None:
             if sort_type == 'match':
                 for offer in queryset:
@@ -161,7 +164,8 @@ def offers_list_view(request):
             newest_offers = queryset.order_by(sort_type)[0:20]
     else:
         newest_offers = Offer.objects.order_by('-creation_date')[0:20]
-    return render(request, 'offerslist.html', {'newest_offers': newest_offers})
+    categories = get_categories()
+    return render(request, 'offerslist.html', {'newest_offers': newest_offers, 'categories': categories})
 
 
 def conversation_view(request, username):

@@ -21,8 +21,16 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label" for="category">Kategoria</label>
-                            <input id="category" name="category" type="text" placeholder=""
-                                   class="form-control input-md">
+                            <select id="category" name="category"
+                                    class="form-control input-md">
+                                <option selected value></option>
+                                {% for parent_name, subcategories in categories %}
+                                    <optgroup label="{{ parent_name }}">
+                                    {% for id, name in subcategories %}
+                                        <option value="{{ id }}">{{ name }}</option>
+                                    {% endfor %}
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-2">
