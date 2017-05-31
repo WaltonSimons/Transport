@@ -90,3 +90,6 @@ ENV/
 
 # Sqlite Database
 *.sqlite3
+
+# migrations
+transport/migrations/
