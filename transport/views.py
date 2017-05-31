@@ -260,3 +260,15 @@ def add_vehicle_view(request):
 def vehicle_view(request, vehicle_id):
     vehicle = get_object_or_404(Vehicle, pk=vehicle_id)
     return render(request, 'vehicle.html', {'vehicle': vehicle})
+
+
+def my_offers(request):
+    offers = request.user.offers.all()
+
+    if request.POST:
+        bid_id = request.POST.get('id')
+        bid = OfferBid.objects.get(pk=bid_id)
+        bid.taken = True
+        bid.save()
+
+    return render(request, 'myoffers.html', {'offers': offers})

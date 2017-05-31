@@ -1,0 +1,33 @@
+{% extends 'navbar.html' %}
+
+{% block title %}Moje Oferty{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class=" col-md-12">
+            <h4>Oferty:</h4>
+            {% for offer in offers %}
+                <li><a href="{% url 'offer' offer.id %}">{{ offer.title }}</a>
+                Licytują:
+                {% for bid in offer.bids.all %}
+                    <ul>
+                        <li><a href="{% url 'user' bid.user.user %}">{{ bid.user.user.username }}</a> - {{ bid.price }}
+                            zł
+                            {% if bid.taken %}
+                                (Przyjęto)
+                            {% endif %}
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <input class="hidden" name="id" value="{{ bid.pk }}">
+                                <button class="btn btn-success" name="take"><span style="margin-right:20px"
+                                                                      class="glyphicon glyphicon-euro"
+                                                                      aria-hidden="true"></span>Przyjmij
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

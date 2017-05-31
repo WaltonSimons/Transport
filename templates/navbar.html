@@ -36,7 +36,7 @@
                            aria-expanded="true">Moje Konto<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="{% url 'user' user.username %}">Mój profil</a></li>
-                            <li><a href="#">Moje oferty</a></li>
+                            <li><a href="{% url 'my_offers' %}">Moje oferty</a></li>
                             <li><a href="{% url 'company' %}">Moja firma</a></li>
                             <li><a href="{% url 'inbox' %}">Wiadomości</a></li>
                             <li role="separator" class="divider"></li>
