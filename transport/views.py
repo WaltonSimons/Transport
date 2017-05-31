@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
-from .models import SiteUser, User, Offer, Conversation, Company, Category, CargoType, Vehicle, OfferBid
+from .models import SiteUser, User, Offer, Conversation, Company, Category, CargoType, Vehicle, OfferBid, Preferences, \
+    OfferMatch
 from datetime import datetime
 from .messages import get_conversation, get_messages, send_message, create_conversation
 from .maps import get_location_model
@@ -56,8 +57,9 @@ def register_view(request):
         location = get_location_model(city, postcode)
         if not User.objects.filter(username=username).exists():
             user = User.objects.create_user(username, email, password)
+            preferences = Preferences.objects.create()
             site_user = SiteUser(user=user, name=name, surname=surname, phone_number=phone, street=street,
-                                 location=location)
+                                 location=location, preferences=preferences)
             site_user.save()
             return redirect('login')
         else:
@@ -161,6 +163,7 @@ def offers_list_view(request):
                                                       WHERE m.user_id = ''' + str(request.user.pk) + '''
                                                       ORDER BY -m.value;
                                                   ''')
+
             if sort_type == 'latest':
                 sort_type = '-creation_date'
             if sort_type == 'price':
@@ -272,3 +275,21 @@ def my_offers(request):
         bid.save()
 
     return render(request, 'myoffers.html', {'offers': offers})
+
+
+def search_preferences(request):
+    preferences = request.user.siteuser.preferences
+
+    if request.POST:
+        dist = request.POST.get('distance')
+        weight = request.POST.get('weight')
+        dimensions = request.POST.get('dimensions')
+
+        preferences.distance_to_start = dist
+        preferences.cargo_weight = weight
+        preferences.cargo_dimension = dimensions
+
+        preferences.save()
+        OfferMatch.objects.filter(user=request.user.siteuser).delete()
+
+    return render(request, 'preferences.html', {'prefs': preferences})

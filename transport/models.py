@@ -16,12 +16,19 @@ class SiteUser(models.Model):
     company = models.ForeignKey('Company', related_name='employees', blank=True, null=True)
     street = models.TextField(max_length=255, blank=True, null=True)
     location = models.ForeignKey('Location', blank=True, null=True)
+    preferences = models.ForeignKey('Preferences', blank=True, null=True)
 
     def formatted_postcode(self):
         return str(self.location.postcode)[0:2] + '-' + str(self.location.postcode)[2:5]
 
     def has_company(self):
         return self.company is not None
+
+
+class Preferences(models.Model):
+    distance_to_start = models.FloatField(default=1)
+    cargo_weight = models.FloatField(default=1)
+    cargo_dimension = models.FloatField(default=1)
 
 
 class Company(models.Model):

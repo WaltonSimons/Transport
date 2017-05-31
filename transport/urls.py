@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'addvehicle/', views.add_vehicle_view, name='add_vehicle'),
     url(r'vehicle/(?P<vehicle_id>\d+)/', views.vehicle_view, name='vehicle'),
     url(r'myoffers/', views.my_offers, name='my_offers'),
+    url(r'preferences', views.search_preferences, name='search_preferences'),
 ]

@@ -4,16 +4,18 @@ from .maps import distance_between_locations
 
 def calculate_match_value(offer, user):
     # values is a list of tuples - (value, weight)
+    prefs = user.preferences
+
     values = []
     distance = distance_between_locations(offer.start_location, user.location)
     p_distance = (1.0 / (1.0 + distance / 100.0))
-    values.append((p_distance, 1))
+    values.append((p_distance, prefs.distance_to_start))
 
     p_cargo_weight = calculate_cargo_weight_match(offer.weight, user.vehicles.all()[0].max_capacity)
-    values.append((p_cargo_weight, 0.5))
+    values.append((p_cargo_weight, prefs.cargo_weight))
 
     p_cargo_dimensions = calculate_cargo_dimensions_match(user.vehicles.all()[0], offer.length, offer.width, offer.height)
-    values.append((p_cargo_dimensions, 0.7))
+    values.append((p_cargo_dimensions, prefs.cargo_dimension))
 
     res = sum([x * y for x, y in values]) / sum([y for x, y in values])
     return res
