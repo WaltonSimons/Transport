@@ -116,6 +116,13 @@ class OfferMatch(models.Model):
     value = models.FloatField()
 
 
+class OfferBid(models.Model):
+    offer = models.ForeignKey('Offer', related_name='bids')
+    user = models.ForeignKey('SiteUser', related_name='bidded')
+    price = models.IntegerField()
+    taken = models.BooleanField(default=False)
+
+
 class Conversation(models.Model):
     users = models.ManyToManyField(User, related_name='conversations')
     last_message_date = models.DateTimeField(default=timezone.now)

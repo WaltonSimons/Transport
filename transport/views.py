@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
-from .models import SiteUser, User, Offer, Conversation, Company, Category, CargoType, Vehicle
+from .models import SiteUser, User, Offer, Conversation, Company, Category, CargoType, Vehicle, OfferBid
 from datetime import datetime
 from .messages import get_conversation, get_messages, send_message, create_conversation
 from .maps import get_location_model
@@ -72,6 +72,11 @@ def user_view(request, username):
 
 def offer_view(request, offer_id):
     offer = get_object_or_404(Offer, pk=offer_id)
+
+    if request.POST:
+        price = request.POST.get('price')
+        bid = OfferBid.objects.create(offer=offer, user=request.user.siteuser, price=price)
+
     return render(request, 'offer.html', {'offer': offer})
 
 

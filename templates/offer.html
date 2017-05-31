@@ -21,9 +21,14 @@
             <h3 style="margin-top:0px;">{{ offer.price_cap }} PLN</h3>
 
             <div class="section" style="padding-bottom:20px;">
-                <button class="btn btn-success"><span style="margin-right:20px" class="glyphicon glyphicon-euro"
-                                                      aria-hidden="true"></span>złóż ofertę
-                </button>
+                <form action="" class="col-md-4" method="post">
+                    {% csrf_token %}
+                    <input id="price" name="price" type="number" placeholder="Twoja oferta"
+                                   class="form-control input-md">
+                    <button class="btn btn-success"><span style="margin-right:20px" class="glyphicon glyphicon-euro"
+                                                          aria-hidden="true" name="bid"></span>złóż ofertę
+                    </button>
+                </form>
             </div>
         </div>
 
