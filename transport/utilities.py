@@ -1,4 +1,4 @@
-from .models import Category
+from .models import Category, CargoType
 
 
 def get_categories():
@@ -12,3 +12,8 @@ def get_categories():
                 children.append(cat)
         res.append((parent.name, map(lambda c: (c.pk, c.name), children)))
     return res
+
+
+def get_cargo_types():
+    cargo_types = CargoType.objects.all()
+    return [(c.pk, c.name) for c in cargo_types]

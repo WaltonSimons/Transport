@@ -19,10 +19,12 @@
                             <form action="" method="post">
                                 {% csrf_token %}
                                 <input class="hidden" name="id" value="{{ bid.pk }}">
+                                {% if not offer.has_ended %}
                                 <button class="btn btn-success" name="take"><span style="margin-right:20px"
                                                                       class="glyphicon glyphicon-euro"
                                                                       aria-hidden="true"></span>Przyjmij
                                 </button>
+                                {% endif %}
                             </form>
                         </li>
                     </ul>

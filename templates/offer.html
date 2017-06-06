@@ -21,6 +21,7 @@
             <h3 style="margin-top:0px;">{{ offer.price_cap }} PLN</h3>
 
             <div class="section" style="padding-bottom:20px;">
+                {% if not offer.has_ended %}
                 <form action="" class="col-md-4" method="post">
                     {% csrf_token %}
                     <input id="price" name="price" type="number" placeholder="Twoja oferta"
@@ -29,6 +30,9 @@
                                                           aria-hidden="true" name="bid"></span>złóż ofertę
                     </button>
                 </form>
+                {% else %}
+                    Oferta została zakończona.
+                {% endif %}
             </div>
         </div>
 

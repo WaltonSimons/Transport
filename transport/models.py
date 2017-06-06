@@ -24,6 +24,9 @@ class SiteUser(models.Model):
     def has_company(self):
         return self.company is not None
 
+    def has_vehicle(self):
+        return len(self.vehicles.all()) > 0
+
 
 class Preferences(models.Model):
     distance_to_start = models.FloatField(default=1)
@@ -97,6 +100,12 @@ class Offer(models.Model):
     def formatted_end_postcode(self):
         return str(self.end_location.postcode)[0:2] + '-' + str(self.end_location.postcode)[2:5]
 
+    def has_ended(self):
+        for bid in self.bids.all():
+            if bid.taken:
+                return True
+        return False
+
 
 class OfferStatus(models.Model):
     name = models.TextField(max_length=255, blank=True, null=True)
@@ -121,6 +130,10 @@ class OfferMatch(models.Model):
     user = models.ForeignKey('SiteUser')
     offer = models.ForeignKey('Offer')
     value = models.FloatField()
+
+    @staticmethod
+    def reset_matches(user):
+        OfferMatch.objects.filter(user=user.siteuser).delete()
 
 
 class OfferBid(models.Model):

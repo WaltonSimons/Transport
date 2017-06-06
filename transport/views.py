@@ -7,7 +7,7 @@ from datetime import datetime
 from .messages import get_conversation, get_messages, send_message, create_conversation
 from .maps import get_location_model
 from .offer_matching import create_match
-from .utilities import get_categories
+from .utilities import get_categories, get_cargo_types
 
 
 # Create your views here.
@@ -89,6 +89,8 @@ def add_offer_view(request):
         author = request.user
         category = request.POST.get('category')
         category = Category.objects.filter(pk=int(category))[0]
+        cargo_type = request.POST.get('cargo_type')
+        cargo_type = CargoType.objects.filter(pk=int(cargo_type))[0]
         earliest_pickup = request.POST.get('earliest_pickup')
         earliest_pickup = None if earliest_pickup == '' else earliest_pickup
         latest_pickup = request.POST.get('latest_pickup')
@@ -123,9 +125,11 @@ def add_offer_view(request):
                                      latest_delivery=latest_delivery, description=description, length=length,
                                      width=width, height=height, weight=weight, price_cap=price,
                                      start_location=start_location,
-                                     end_location=end_location)
+                                     end_location=end_location, cargo_type=cargo_type)
     categories = get_categories()
-    return render(request, 'addoffer.html', {'categories': categories})
+    cargo_types = get_cargo_types()
+
+    return render(request, 'addoffer.html', {'categories': categories, 'cargo_types': cargo_types})
 
 
 def offers_list_view(request):
@@ -290,6 +294,6 @@ def search_preferences(request):
         preferences.cargo_dimension = dimensions
 
         preferences.save()
-        OfferMatch.objects.filter(user=request.user.siteuser).delete()
+        OfferMatch.reset_matches(request.user)
 
     return render(request, 'preferences.html', {'prefs': preferences})
