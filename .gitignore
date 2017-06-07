@@ -93,3 +93,6 @@ ENV/
 
 # migrations
 transport/migrations/
+
+# Pycharm
+.idea
