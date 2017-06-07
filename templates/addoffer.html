@@ -134,6 +134,17 @@
                                    class="form-control input-md">
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="cargo_type">Typ pojazdu</label>
+                            <select id="cargo_type" name="cargo_type"
+                                    class="form-control input-md">
+                                {% for pk, name in cargo_types %}
+                                        <option value="{{ pk }}">{{ name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">

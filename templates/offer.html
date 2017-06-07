@@ -7,7 +7,8 @@
         <div class="col-xs-5" style="border:0px solid gray">
             <h3>{{ offer.title }}</h3>
             <h5>dodano {{ offer.creation_date.date }}</h5>
-            <h5>kategoria: {{ offer.category.name }}</h5>
+            <h5>Kategoria: {{ offer.category.name }}</h5>
+            <h5>Wymagany typ pojazdu: {{ offer.cargo_type.name }}</h5>
             <h5>przez <a href="{% url 'user' offer.author %}">{{ offer.author }}</a>
                 {% if user.username != offer.author.username %} ·
                     <a href="{% url 'conversation' offer.author %}" class="glyphicon glyphicon-envelope"></a>

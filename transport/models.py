@@ -80,7 +80,7 @@ class Offer(models.Model):
     width = models.IntegerField(blank=True, null=True)
     height = models.IntegerField(blank=True, null=True)
     weight = models.FloatField(blank=True, null=True)
-    cargo_types = models.ManyToManyField('CargoType', related_name='offers')
+    cargo_type = models.ForeignKey('CargoType', related_name='offers', blank=True, null=True)
     services = models.ManyToManyField('Service', related_name='offers')
     price_cap = models.IntegerField(blank=True, null=True)
     start_location = models.ForeignKey(Location, blank=True, null=True, related_name='offers_start')
