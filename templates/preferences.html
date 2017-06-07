@@ -9,13 +9,13 @@
             <h2 class="form-signin-heading">Preferencje wyszukiwania</h2>
             <label for="distance">Odległość od lokacji odbioru</label>
             <input id="distance" name="distance" class="form-control" value="{{ prefs.distance_to_start }}" required=""
-                   autofocus="" type="number" step="0.01">
+                   autofocus="" type="range" max="1.0" step="0.01">
             <label for="weight">Waga ładunku</label>
             <input id="weight" name="weight" class="form-control" value="{{ prefs.cargo_weight }}" required=""
-                   type="number" step="0.01">
+                   type="range" max="1.0" step="0.01">
             <label for="dimensions">Rozmiar ładunku</label>
             <input id="dimensions" name="dimensions" class="form-control" value="{{ prefs.cargo_dimension }}" required=""
-                   type="number" step="0.01">
+                   type="range" max="1.0" step="0.01">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Zapisz</button>
         </form>
     </div>
