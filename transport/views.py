@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from .models import SiteUser, User, Offer, Conversation, Company, Category, CargoType, Vehicle, OfferBid, Preferences, \
-    OfferMatch
+    OfferMatch, UserRating
 from datetime import datetime
 from .messages import get_conversation, get_messages, send_message, create_conversation
 from .maps import get_location_model
@@ -69,7 +69,27 @@ def register_view(request):
 
 def user_view(request, username):
     user = get_object_or_404(User, username=username)
-    return render(request, 'user.html', {'userprofile': user.siteuser, 'profile_user': user})
+
+    if request.POST:
+        rating = request.POST.get('rating')
+        rating_obj = UserRating.objects.filter(ratedUser=user.siteuser, ratingUser=request.user.siteuser)
+        if len(rating_obj) > 0:
+            rating_obj[0].value = rating
+            rating_obj[0].save()
+        else:
+            UserRating.objects.create(ratedUser=user.siteuser, ratingUser=request.user.siteuser, value=rating)
+
+    can_rate = False
+
+    rating = UserRating.objects.filter(ratedUser=user.siteuser, ratingUser=request.user.siteuser)
+    rating = rating[0].value if len(rating) > 0 else 0
+
+    for bid in request.user.siteuser.bidded.all():
+        if bid.offer.author == user:
+            can_rate = True
+
+    return render(request, 'user.html',
+                  {'userprofile': user.siteuser, 'profile_user': user, 'can_rate': can_rate, 'rating': rating})
 
 
 def offer_view(request, offer_id):

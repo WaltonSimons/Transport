@@ -13,7 +13,7 @@
                 {% if user.username != offer.author.username %} ·
                     <a href="{% url 'conversation' offer.author %}" class="glyphicon glyphicon-envelope"></a>
                 {% endif %}·
-                <small>(20 opinii)</small>
+                <small>({{ offer.author.siteuser.received_ratings|length }} opinii)</small>
             </h5>
 
             <h6 class="title-price">

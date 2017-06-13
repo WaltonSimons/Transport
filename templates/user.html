@@ -40,7 +40,31 @@
                             <tr>
                                 <td>Kod pocztowy</td>
                                 <td>{{ profile_user.siteuser.formatted_postcode }}</td>
-
+                            </tr>
+                            {% if can_rate %}
+                                <tr>
+                                    <td>Twoja ocena:</td>
+                                    <td>
+                                        <form name="RateForm"
+                                              action="{% url 'user' profile_user.username %}" method="post">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <select id="rating" name="rating"
+                                                        class="form-control input-md">
+                                                    <option value="0">0</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </select>
+                                            </div>
+                                            <button class="btn btn-lg btn-primary" type="submit">Zapisz
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endif %}
                             </tbody>
                         </table>
                     </div>
