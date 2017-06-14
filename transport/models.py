@@ -32,6 +32,8 @@ class Preferences(models.Model):
     distance_to_start = models.FloatField(default=1)
     cargo_weight = models.FloatField(default=1)
     cargo_dimension = models.FloatField(default=1)
+    longest_pickup = models.FloatField(default=1)
+    longest_delivery = models.FloatField(default=1)
 
 
 class Company(models.Model):

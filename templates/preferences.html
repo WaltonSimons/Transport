@@ -16,6 +16,12 @@
             <label for="dimensions">Rozmiar ładunku</label>
             <input id="dimensions" name="dimensions" class="form-control" value="{{ prefs.cargo_dimension }}" required=""
                    type="range" max="1.0" step="0.01">
+            <label for="longest_pickup">Czas na odbiór</label>
+            <input id="longest_pickup" name="longest_pickup" class="form-control" value="{{ prefs.longest_pickup }}" required=""
+                   type="range" max="1.0" step="0.01">
+            <label for="longest_delivery">Czas dostawy</label>
+            <input id="longest_delivery" name="longest_delivery" class="form-control" value="{{ prefs.longest_delivery }}" required=""
+                   type="range" max="1.0" step="0.01">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Zapisz</button>
         </form>
     </div>

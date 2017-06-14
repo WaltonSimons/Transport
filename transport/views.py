@@ -331,10 +331,14 @@ def search_preferences(request):
         dist = request.POST.get('distance')
         weight = request.POST.get('weight')
         dimensions = request.POST.get('dimensions')
+        longest_pickup = request.POST.get('longest_pickup')
+        longest_delivery = request.POST.get('longest_delivery')
 
         preferences.distance_to_start = dist
         preferences.cargo_weight = weight
         preferences.cargo_dimension = dimensions
+        preferences.longest_pickup = longest_pickup
+        preferences.longest_delivery = longest_delivery
 
         preferences.save()
         OfferMatch.reset_matches(request.user)
