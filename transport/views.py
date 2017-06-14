@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from .models import SiteUser, User, Offer, Conversation, Company, Category, CargoType, Vehicle, OfferBid, Preferences, \
-    OfferMatch, UserRating
+    OfferMatch, UserRating, Filter
 from datetime import datetime
 from .messages import get_conversation, get_messages, send_message, create_conversation
 from .maps import get_location_model
@@ -162,7 +162,21 @@ def offers_list_view(request):
         min_price = request.GET.get('min_price')
         sort_type = request.GET.get('sort')
         category = request.GET.get('category')
+
+        filter = request.GET.get('filter')
+        if filter:
+            filter = Filter.objects.get(pk=filter)
+            title = filter.title
+            length = filter.length
+            width = filter.width
+            height = filter.height
+            weight = filter.weight
+            min_price = filter.min_price
+            category = filter.category
+
         queryset = Offer.objects.all()
+        if sort_type is None:
+            sort_type = 'latest'
         if title is not None:
             queryset = queryset.filter(title__contains=title)
         if length is not None:
@@ -177,6 +191,15 @@ def offers_list_view(request):
             queryset = queryset.filter(price_cap__gte=min_price)
         if category is not None and category is not '':
             queryset = queryset.filter(category=category)
+
+        if request.GET.get('save'):
+            if category is not '':
+                category = Category.objects.get(pk=category)
+            else:
+                category = None
+            Filter.objects.create(name=request.GET.get('filter_name'), user=request.user, title=title, category=category,
+                                  length=length, width=width, height=height, weight=weight, min_price=min_price)
+
         if sort_type is not None:
             if sort_type == 'match':
                 for offer in queryset:

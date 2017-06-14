@@ -84,6 +84,12 @@
                         <div class="form-group">
                             <button class="btn btn-default">Wyszukaj</button>
                         </div>
+                        <div class="form-group">
+                            <input name="save" class="checkbox-primary" type="checkbox">Zapisz filtr
+                            <input id="filter_name" name="filter_name" type="text"
+                                   placeholder="Nazwa filtra"
+                                   class="form-control input-md">
+                        </div>
                     </div>
                 </div>
             </form>
@@ -97,6 +103,10 @@
                         .prop('name', '');
                 });
             </script>
+            <h4>Zapisane filtry:</h4>
+            {% for filter in user.filters.all %}
+                <li><a href="{% url 'offers_list' %}?filter={{ filter.pk }}">{{ filter.name }}</a></li>
+            {% endfor %}
         </div>
     </div>
     <div class="row">

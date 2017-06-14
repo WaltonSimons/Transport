@@ -164,3 +164,15 @@ class Message(models.Model):
     sender = models.ForeignKey(User, related_name='sender')
     text = models.TextField(max_length=5000)
     creation_date = models.DateTimeField(default=timezone.now)
+
+
+class Filter(models.Model):
+    name = models.TextField(max_length=512)
+    user = models.ForeignKey(User, related_name='filters')
+    title = models.TextField(max_length=512, blank=True, null=True)
+    category = models.ForeignKey('Category', blank=True, null=True)
+    length = models.IntegerField(blank=True, null=True)
+    width = models.IntegerField(blank=True, null=True)
+    height = models.IntegerField(blank=True, null=True)
+    weight = models.FloatField(blank=True, null=True)
+    min_price = models.IntegerField(blank=True, null=True)
